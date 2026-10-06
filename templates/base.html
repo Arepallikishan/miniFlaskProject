@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪸 Portfolio Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5dc;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background-color: #a9a9a9;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2e8b57;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #246b43;
+        }
+
+        /* Portfolio Display Card */
+        .portfolio-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin-top: 30px;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #ccc;
+        }
+
+        .profile-header {
+            padding: 0 20px 20px 20px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+            margin-top: -55px;
+            background-color: #fff;
+        }
+
+        .portfolio-body {
+            padding: 20px;
+        }
+
+        .skills-tag {
+            display: inline-block;
+            background-color: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2><center>🪸 Welcome to Portfolio Generator</center></h2>
+    <hr>
+
+    <!-- INPUT FORM -->
+    <div class="form-card">
+        <h3>Enter Your Portfolio Details</h3>
+        <form method="post">
+            <div class="form-group">
+                <label for="profile_url">Profile Picture URL</label>
+                <input type="url" name="profile_url" id="profile_url" placeholder="https://example.com/avatar.jpg" required>
+            </div>
+
+            <div class="form-group">
+                <label for="banner_url">Banner Image URL</label>
+                <input type="url" name="banner_url" id="banner_url" placeholder="https://example.com/banner.jpg" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" placeholder="John Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label for="headline">Professional Headline</label>
+                <input type="text" name="headline" id="headline" placeholder="Full Stack Developer | Cloud Specialist" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" placeholder="john@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" name="location" id="location" placeholder="San Francisco, CA" required>
+            </div>
+
+            <div class="form-group">
+                <label for="skills">Skills (Comma-separated)</label>
+                <input type="text" name="skills" id="skills" placeholder="Python, React, SQL, Docker" required>
+            </div>
+
+            <div class="form-group">
+                <label for="experience_level">Experience Level</label>
+                <select name="experience_level" id="experience_level" required>
+                    <option value="" disabled selected>Select level</option>
+                    <option value="Entry Level / Junior">Entry Level / Junior</option>
+                    <option value="Mid Level">Mid Level</option>
+                    <option value="Senior Level">Senior Level</option>
+                    <option value="Lead / Management">Lead / Management</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date_of_joining">Date of Joining / Career Start</label>
+                <input type="date" name="date_of_joining" id="date_of_joining" required>
+            </div>
+
+            <div class="form-group">
+                <label for="short_bio">Short Bio</label>
+                <textarea name="short_bio" id="short_bio" rows="4" placeholder="Briefly introduce yourself..." required></textarea>
+            </div>
+
+            <button type="submit">Generate Portfolio</button>
+        </form>
+    </div>
+
+    <!-- PORTFOLIO DISPLAY -->
+    {% if data %}
+        <hr>
+        <div class="portfolio-card">
+            <!-- Banner -->
+            <img src="{{ data['banner_url'] }}" alt="Banner Image" class="banner-img">
+            
+            <div class="profile-header">
+                <!-- Profile Image -->
+                <img src="{{ data['profile_url'] }}" alt="{{ data['name'] }}" class="profile-img">
+                <h2>{{ data['name'] }}</h2>
+                <p style="color: #555; font-weight: bold; font-size: 1.1em; margin-top: -10px;">{{ data['headline'] }}</p>
+                <p style="color: #777; font-size: 0.9em;">
+                    📍 {{ data['location'] }} &nbsp;|&nbsp; ✉️ {{ data['email'] }}
+                </p>
+            </div>
+
+            <hr style="margin: 0; border: 0; border-top: 1px solid #eee;">
+
+            <div class="portfolio-body">
+                <h4>About Me</h4>
+                <p>{{ data['short_bio'] }}</p>
+
+                <h4>Experience Details</h4>
+                <p><b>Level:</b> {{ data['experience_level'] }}</p>
+                <p><b>Joined / Started On:</b> {{ data['date_of_joining'] }}</p>
+
+                <h4>Skills</h4>
+                <div>
+                    {% for skill in data['skills'] %}
+                        <span class="skills-tag">{{ skill.strip() }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
